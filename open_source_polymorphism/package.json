@@ -1,0 +1,14 @@
+{
+  "name": "shay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "dependencies": {
+    "object-to-xml": "2.0.0",
+    "mongodb": "3.5.5",
+    "pg": "8.0.2"
+  },
+  "author": "",
+  "license": "ISC"
+}
