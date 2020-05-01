@@ -1,0 +1,46 @@
+1.	How many people got sick  (cases)?
+select count(*) from cases;
+2.	How many males got sick
+select count(*) from cases
+where sex='Male'
+
+
+3.	How many males who traveled to china got sick
+select count(*) from cases
+where sex='Male' and travel_history_country = 'China';
+
+4.	  how many cases for each age , for males  , order by ascending age
+select age,count(*) from cases
+ where sex='Male'
+ group by age
+order by age asc
+
+5.	What is the distribution of deaths by provinces
+select health_region,count(*) from mortality
+group by health_region;
+
+6.	Show only provinces that had more than 500 cases
+select province,count(*) as patients from cases
+group by province
+having count(*)>500
+
+
+7.	Show the distribution of cases every month, in provinces with more than 500 cases   extract(month from report_week::date)
+select age, count(*) from cases
+where (province  in (select province as patients from cases
+group by province
+having count(*)>500))
+group by age;
+
+
+
+8.	What is the percentage ( #deaths/#cases) of deaths by ages
+
+
+select cases.age,patients,deaths, 100*(case when deaths is not null then deaths else 0 end)/cast(patients as float) death_percent from
+(select age,count(*) patients from cases group by age) as cases
+left join
+(select age,count(*) deaths from mortality group by age) as mortality
+on cases.age = mortality.age
+order by age desc
+
